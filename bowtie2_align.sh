@@ -12,7 +12,7 @@ then
   exit 1
 fi 
 
-if [[ $R4 == "" ]]
+if [[ $R2 == "" ]]
 then
   echo "Aligning single-end reads ($R1), --sensitive-local mode, against index $SPECIES, tag $TAG"
   bowtie2 --sensitive-local -t -p 4 -S $TAG.sam -x /media/DISK1/reference/Bowtie2/$SPECIES -U $R1 
