@@ -2,9 +2,10 @@
 
 import sys
 import subprocess
-
-gtf_in_filename = sys.argv[1]
-gtf_out_filename = '.'.join(gtf_in_filename.split('.')[:-1]) + '.genes.gtf'
+# GTF file with start- and stop-codons, exons, and CDSs
+gtf_in_filename = sys.argv[1] 
+# GTF files with whole genes as features
+gtf_out_filename = '.'.join(gtf_in_filename.split('.')[:-1]) + '.genes.gtf' 
 with open(gtf_in_filename, 'r') as ingtf, open(gtf_out_filename, 'w') as outgtf:
     gene_id = ''
     gene_start = 0
