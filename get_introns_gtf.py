@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import sys
-# GTF file with start- and stop-codons, exons, and CDSs
+# GTF file with exons;
+# this file should be sorted by (in the following order!): 
+# gene_id, transcript_id, chromosome name, strand, and start coordinate 
 gtf_in_filename = sys.argv[1] 
 # GTF file with introns as features
 gtf_out_filename = '.'.join(gtf_in_filename.split('.')[:-1]) + '.introns.gtf' 
