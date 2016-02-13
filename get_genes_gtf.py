@@ -49,7 +49,7 @@ with open(gtf_in_filename, 'r') as ingtf, open(gtf_out_filename, 'w') as outgtf:
             if max_coord > gene_end:
                 gene_end = max_coord
 
-    outgtf.write(chr_name + '\t' + ref_seq + '\t' + feature + '\t' + \
+    outgtf.write(chr_name + '\t' + ref_seq + '\t' + 'gene' + '\t' + \
                  str(gene_start) + '\t' + str(gene_end) + '\t' + score + '\t' + \
                  strand + '\t' + codon_position + '\t' + \
                  'gene_id ' + '"' + gene_id  + '" ' \
