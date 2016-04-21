@@ -3,10 +3,11 @@
 ## download all of the SRA files associated with a GSM 
 GSM=$1
 
-echo "Getting the following exeriments for $GSM:" 
-esearch -db sra -query $GSM | efetch -format runinfo | awk -F "," '{if (NR>1) printf "%s\t%s\t%s\n",$1,$13,$14}' | grep -v "^\s*$"
-SRRS=`esearch -db sra -query $GSM | efetch -format runinfo | awk -F "," '{if (NR>1) print $1}' | grep -v "^\s*$"`
-SRXS=`esearch -db sra -query $GSM | efetch -format runinfo | awk -F "," '{if (NR>1) print $13}' | grep -v "^\s*$"`
+KK=`esearch -db sra -query $GSM | efetch -format runinfo | grep SRR | perl -ne 'm/(SRR\d+).*(SRX\d+)/g; print "$1\t$2\n"'`
+SRRS=`echo $KK | perl -ne '@t=split; foreach my $i (@t) {print "$i " if ($i =~ m/SRR/g)}; print "\n"'`
+SRXS=`echo $KK | perl -ne '@t=split; foreach my $i (@t) {print "$i " if ($i =~ m/SRX/g)}; print "\n"'`
+
+echo "Getting the following exeriments for $GSM: $KK" 
 
 a=( $SRRS ) 
 b=( $SRXS ) 

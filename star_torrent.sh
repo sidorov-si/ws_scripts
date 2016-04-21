@@ -17,16 +17,10 @@ fi
 
 if [[ -e $TAG.fastq.gz ]]
 then 
-  RL=`zcat $TAG.fastq.gz | head -n 2 | tail -n 1 | wc -c | awk '{print $1-1}'`
+  RL="101"
   REF="/media/DISK1/reference/STAR/${SPECIES}_${RL}bp"
   echo "Processing alignment as single-end, using STAR index $REF."
   READS=$WDIR/$TAG.fastq.gz
-elif [[ -e $TAG.R1.fastq.gz && -e $TAG.R2.fastq.gz ]]
-then
-  RL=`zcat $TAG.R1.fastq.gz | head -n 2 | tail -n 1 | wc -c | awk '{print $1-1}'`
-  REF="/media/DISK1/reference/STAR/${SPECIES}_${RL}bp"
-  echo "Processing alignment as paired-end, using STAR index $REF."
-  READS="$WDIR/$TAG.R1.fastq.gz $WDIR/$TAG.R2.fastq.gz"
 else
   echo "ERROR: The reqiured fastq.gz files were not found!" 
   exit 1
@@ -40,7 +34,7 @@ fi
 
 mkdir ${TAG}_STAR
 cd ${TAG}_STAR
-STAR --genomeDir $REF --readFilesIn $READS --runThreadN 4 --readFilesCommand zcat --outFilterMultimapNmax 15 --outFilterMismatchNmax 6  --outSAMstrandField All --outSAMtype BAM SortedByCoordinate --quantMode TranscriptomeSAM 
+STAR --genomeDir $REF --readFilesIn $READS --runThreadN 4 --readFilesCommand zcat --outFilterMultimapNmax 15 --outReadsUnmapped Fastx --seedSearchStartLmax 30 --outFilterScoreMinOverLread 0 --outFilterMatchNminOverLread 0 --outFilterMatchNmin 50  --outSAMstrandField All --outSAMtype BAM SortedByCoordinate --quantMode TranscriptomeSAM 
 
 mv Aligned.sortedByCoord.out.bam $TAG.bam
 mv Aligned.toTranscriptome.out.bam $TAG.tr.bam 
