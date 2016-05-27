@@ -25,7 +25,7 @@ then
 elif [[ -e $TAG.R1.fastq.gz && -e $TAG.R2.fastq.gz ]]
 then
   REF="/media/DISK1/reference/kallisto/${SPECIES}_kallisto"
-  echo "Processing alignment as paired-end, using STAR index $REF."
+  echo "Processing alignment as paired-end, using kallisto index $REF."
   READS="$TAG.R1.fastq.gz $TAG.R2.fastq.gz"
 else
   echo "ERROR: The reqiured fastq.gz files were not found!" 

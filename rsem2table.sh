@@ -4,9 +4,11 @@
 
 NTAG=$1
 FILTER=$2
+ANN=$3
 
-F1=`ls *genes.results | head -n 1`
-awk '{print $1}' $F1 > names 
+echo -e "Gene_id\tSymbol\tGene_type" > names
+cat $ANN >> names
+
 PP=`ls *genes.results | grep $FILTER`
 
 for i in $PP
@@ -14,9 +16,12 @@ do
   echo "processing file $i" 
   TAG=${i%%.genes.results}
   echo $TAG > $TAG.tmp
-  echo $TAG > $TAG.tmp2
+  #echo $TAG > $TAG.tmp2
   awk '{if (NR>1) print $5}' $i >> $TAG.tmp
+  #awk '{if (NR>1) print $7}' $i >> $TAG.tmp2
 done
 
 paste names *.tmp  > $NTAG.all_gene.rsem.counts  
+#paste names *.tmp2 > $NTAG.all_gene.rsem.fpkms
 rm *.tmp names
+# rm *.tmp2
